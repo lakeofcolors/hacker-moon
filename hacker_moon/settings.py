@@ -39,14 +39,18 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'pages.apps.PagesConfig',
     'users.apps.UsersConfig',
+    'auth.apps.MyAuthConfig',
     'rest_framework',
 ]
 
 AUTH_USER_MODEL = 'users.User'
 
+SECRET_KEY = 'hacker-moon'
+REFRESH_TOKEN_SECRET = 'hacker-moon'
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'auth.helper.JWTAuthentication',
     ],
 }
 
