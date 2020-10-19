@@ -4,12 +4,13 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django = "==2.2.7"
+django = "==3.1"
 psycopg2-binary = "==2.8.3"
 djangorestframework = "*"
 markdown = "*"
 django-filter = "*"
 djangorestframework-simplejwt = "*"
+geoip2 = "*"
 
 [dev-packages]
 

@@ -27,6 +27,9 @@ def generate_refresh_token(user):
     return refresh_token
 
 def get_client_ip_address(request):
+    '''
+    Simply get the remote adreess of user from request
+    '''
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
 
     if x_forwarded_for:
@@ -35,3 +38,9 @@ def get_client_ip_address(request):
         ip = request.META.get('REMOTE_ADDR')
 
     return ip
+
+def check_equal_of_adresses(old_address: str, new_addess: str) -> bool:
+    '''
+    Checks the difference between a remote address from a database and a new one
+    '''
+    return old_address is new_address

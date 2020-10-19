@@ -5,6 +5,14 @@ from rest_framework.permissions import AllowAny
 from rest_framework.decorators import api_view, permission_classes
 from users.serializers import UserSerializer
 from auth.utils import generate_access_token, generate_refresh_token
+from users.models import EntryPoint
+from .utils import get_client_ip_address
+from auth.services.entrypoint import create_entry_point
+import logging
+import functools
+
+logger = logging.getLogger(__name__)
+
 
 
 @api_view(['GET'])
@@ -15,7 +23,6 @@ def profile(request):
     user = request.user
     serialized_user = UserSerializer(user, context={'request':request}).data
     return Response({'user': serialized_user})
-
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -37,6 +44,10 @@ def login(request):
     if (not user.check_password(password)):
         raise exceptions.AuthenticationFailed('wrong password')
 
+
+    remote_addr = get_client_ip_address(request)
+    entry_point_created = create_entry_point(user, remote_addr)
+
     serialized_user = UserSerializer(user,context={'request':request}).data
 
     access_token = generate_access_token(user)
@@ -48,4 +59,14 @@ def login(request):
         'user': serialized_user,
     }
 
+    return response
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def register(request):
+    response = Response()
+
+    data.response = {
+        "success": True
+    }
     return response

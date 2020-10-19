@@ -20,7 +20,7 @@ urlpatterns = [
     # Admin panel Django
     path('admin/', admin.site.urls),
     # API
-    path('', include('pages.urls')),
+    path('pages/', include('pages.urls')),
     path('', include('users.urls')),
     path('', include('auth.urls')),
 ]

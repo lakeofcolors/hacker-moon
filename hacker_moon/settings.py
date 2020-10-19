@@ -47,6 +47,42 @@ AUTH_USER_MODEL = 'users.User'
 
 SECRET_KEY = 'hacker-moon'
 REFRESH_TOKEN_SECRET = 'hacker-moon'
+GEOIP_PATH = os.path.join(BASE_DIR,'auth/geoip/')
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{'
+        },
+        'simple': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{'
+        }
+    },
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+        },
+        'file': {
+            'level': 'WARNING',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR,'hacker_moon/logs','errors.log'),
+            'formatter': 'simple',
+        },
+    },
+    'loggers': {
+        'auth': {
+            'handlers': ['file','console'],
+            'level': 'INFO',
+            'propagate': True,
+        }
+    }
+}
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
