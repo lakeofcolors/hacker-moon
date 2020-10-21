@@ -10,13 +10,13 @@ from .utils import get_client_ip_address
 from auth.services.entrypoint import create_entry_point
 import logging
 import functools
-
+from auth.exceptions.register import RegisterRequiredData
 logger = logging.getLogger(__name__)
 
 
 
 @api_view(['GET'])
-def profile(request):
+def profile(request) -> Response:
     '''
     Get profile info
     '''
@@ -26,7 +26,7 @@ def profile(request):
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
-def login(request):
+def login(request) -> Response:
     '''
     Get access and refresh jwt tokens
     '''
@@ -63,10 +63,26 @@ def login(request):
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
-def register(request):
+def register(request) -> Response:
+
+
     response = Response()
 
-    data.response = {
-        "success": True
-    }
+    User = get_user_model()
+    email = request.data.get('email')
+    username = request.data.get('username')
+    password = request.data.get('password')
+
+    if (username is None) or (password is None) or (email is None):
+        raise RegisterRequiredData()
+
+
+    user = User(
+        email=email,
+        password=password,
+        username=username
+    )
+
+    user.save()
+
     return response
