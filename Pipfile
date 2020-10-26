@@ -11,6 +11,7 @@ markdown = "*"
 django-filter = "*"
 djangorestframework-simplejwt = "*"
 geoip2 = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 

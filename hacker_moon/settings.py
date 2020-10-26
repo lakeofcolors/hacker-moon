@@ -41,10 +41,12 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'auth.apps.MyAuthConfig',
     'rest_framework',
+    'corsheaders',
 ]
 
 AUTH_USER_MODEL = 'users.User'
-
+ALLOWED_HOSTS=['*']
+CORS_ORIGIN_ALLOW_ALL = True
 SECRET_KEY = 'hacker-moon'
 REFRESH_TOKEN_SECRET = 'hacker-moon'
 GEOIP_PATH = os.path.join(BASE_DIR,'auth/geoip/')
@@ -98,6 +100,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
 ]
 
 ROOT_URLCONF = 'hacker_moon.urls'
